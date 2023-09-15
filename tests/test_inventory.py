@@ -57,7 +57,7 @@ def test_search_products():
     inventory = Inventory()
     inventory.add_product(ElectronicProduct(name="Laptop", price=1000, quantity=3, brand="Dell", model="Model1",
                                             warranty_period=12))
-    inventory.add_product(BookProduct(name="Nonfiction", price=1000, quantity=3, author="Frederic Lalu",
+    inventory.add_product(BookProduct(name="Nonfiction", price=120, quantity=7, author="Frederic Lalu",
                                       publisher="Dell", ISBN="1223-456-zd4"))
     search_result = inventory.search_products("Dell")
 
