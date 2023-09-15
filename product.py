@@ -1,41 +1,46 @@
-class Product:
-    def __init__(self, name, price, quantity):
-        self.name = name
-        self.price = price
-        self.quantity = quantity
+from pydantic import BaseModel
+
+
+class Product(BaseModel):
+    name: str
+    price: float
+    quantity: int
 
     def __str__(self):
         return f"{self.name} - Price: ${self.price} - Quantity: {self.quantity}"
 
 
 class ElectronicProduct(Product):
-    def __init__(self, name, price, quantity, brand, model, warranty_period):
-        super().__init__(name, price, quantity)
-        self.brand = brand
-        self.model = model
-        self.warranty_period = warranty_period
+    brand: str
+    model: str
+    warranty_period: int
 
     def __str__(self):
-        return f"Electronic - {super().__str__()} - Brand: {self.brand} - Model: {self.model} - Warranty: {self.warranty_period} months"
+        return f"Electronic - {super().__str__()} - " \
+               f"Brand: {self.brand} - " \
+               f"Model: {self.model} - " \
+               f"Warranty: {self.warranty_period} months"
 
 
 class BookProduct(Product):
-    def __init__(self, name, price, quantity, author, publisher, ISBN):
-        super().__init__(name, price, quantity)
-        self.author = author
-        self.publisher = publisher
-        self.ISBN = ISBN
+    author: str
+    publisher: str
+    ISBN: str
 
     def __str__(self):
-        return f"Book - {super().__str__()} - Author: {self.author} - Publisher: {self.publisher} - ISBN: {self.ISBN}"
+        return f"Book - {super().__str__()} - " \
+               f"Author: {self.author} - " \
+               f"Publisher: {self.publisher} - " \
+               f"ISBN: {self.ISBN}"
 
 
 class ClothingProduct(Product):
-    def __init__(self, name, price, quantity, material, size, color):
-        super().__init__(name, price, quantity)
-        self.material = material
-        self.size = size
-        self.color = color
+    material: str
+    size: str
+    color: str
 
     def __str__(self):
-        return f"Clothing - {super().__str__()} - Material: {self.material} - Size: {self.size} - Color: {self.color}"
+        return f"Clothing - {super().__str__()} - " \
+               f"Material: {self.material} - " \
+               f"Size: {self.size} - " \
+               f"Color: {self.color}"

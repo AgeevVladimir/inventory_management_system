@@ -1,26 +1,29 @@
 [
     {
         "name": "Laptop",
-        "price": 800,
+        "price": 800.0,
         "quantity": 10,
         "brand": "Dell",
         "model": "XPS 13",
-        "warranty_period": 24
+        "warranty_period": 24,
+        "product_type": "ElectronicProduct"
     },
     {
         "name": "Python Cookbook",
-        "price": 40,
+        "price": 40.0,
         "quantity": 30,
         "author": "David Beazley",
         "publisher": "O'Reilly",
-        "ISBN": "978-1449340377"
+        "ISBN": "978-1449340377",
+        "product_type": "BookProduct"
     },
     {
         "name": "T-shirt",
-        "price": 15,
+        "price": 15.0,
         "quantity": 50,
         "material": "Cotton",
         "size": "L",
-        "color": "Red"
+        "color": "Red",
+        "product_type": "ClothingProduct"
     }
 ]
