@@ -1,6 +1,7 @@
 [
     {
-        "name": "Laptop",
+        "category": "Electronics",
+        "subcategory": "Laptop",
         "price": 800.0,
         "quantity": 10,
         "brand": "Dell",
@@ -9,16 +10,29 @@
         "product_type": "ElectronicProduct"
     },
     {
-        "name": "Python Cookbook",
+        "category": "Electronics",
+        "subcategory": "Laptop",
+        "price": 1000.0,
+        "quantity": 10,
+        "brand": "Dell",
+        "model": "XPS 15",
+        "warranty_period": 24,
+        "product_type": "ElectronicProduct"
+    },
+    {
+        "category": "Books",
+        "subcategory": "Nonfiction",
         "price": 40.0,
         "quantity": 30,
+        "title": "Python Cookbook",
         "author": "David Beazley",
         "publisher": "O'Reilly",
         "ISBN": "978-1449340377",
         "product_type": "BookProduct"
     },
     {
-        "name": "T-shirt",
+        "category": "Clothing",
+        "subcategory": "T-shirt",
         "price": 15.0,
         "quantity": 50,
         "material": "Cotton",
