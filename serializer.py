@@ -27,11 +27,11 @@ def deserialize_inventory(filename):
     with open(filename, 'r') as file:
         data = json.load(file)
         for item in data:
-            product_type = item.pop('product_type')
+            product_type = item.pop('product_type', 'Product')
             if product_type in class_lookup:
                 product = class_lookup[product_type](**item)
                 new_inventory.add_product(product)
             else:
-                print(f"Unknown product_type: {product_type}")
+                raise ValueError(f"Unknown product_type: {product_type}")
     return new_inventory
 

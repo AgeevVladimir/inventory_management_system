@@ -11,8 +11,8 @@ if __name__ == "__main__":
     inventory.add_product(ClothingProduct(name="T-shirt", price=15, quantity=50,
                                           material="Cotton", size="L", color="Red"))
 
-    serialize_inventory(inventory, "inventory_data.json")
-    new_inventory = deserialize_inventory("inventory_data.json")
+    serialize_inventory(inventory, "resources/inventory_data.json")
+    new_inventory = deserialize_inventory("resources/inventory_data.json")
 
     new_inventory.add_product(ElectronicProduct(name="Tablet", price=400, quantity=20,
                                                 brand="Samsung", model="Galaxy Tab S7", warranty_period=12))

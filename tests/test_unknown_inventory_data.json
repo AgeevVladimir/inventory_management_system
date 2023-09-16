@@ -1,0 +1,11 @@
+[
+    {
+        "name": "Car",
+        "price": 30000.0,
+        "quantity": 1,
+        "brand": "Toyota",
+        "model": "Rav4",
+        "warranty_period": 60,
+        "product_type": "Vehicle"
+    }
+]

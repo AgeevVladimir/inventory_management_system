@@ -1,6 +1,8 @@
 import os
 import sys
 
+import pytest
+
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from inventory import Inventory
@@ -11,10 +13,18 @@ from serializer import serialize_inventory, deserialize_inventory
 def test_add_product():
     inventory = Inventory()
     product = Product(name="TestProduct", price=100.0, quantity=5)
-
     inventory.add_product(product)
-
     assert inventory.check_quantity("TestProduct") == 5
+
+
+# to_do: check that price is the same
+def test_add_existing_product():
+    inventory = Inventory()
+    product = Product(name="TestProduct", price=100.0, quantity=5)
+    product_add = Product(name="TestProduct", price=990.0, quantity=-2)
+    inventory.add_product(product)
+    inventory.add_product((product_add))
+    assert inventory.check_quantity("TestProduct") == 3
 
 
 def test_remove_product():
@@ -51,6 +61,13 @@ def test_serialize_deserialize():
 
     assert new_inventory.check_quantity("Laptop") == 3
     assert new_inventory.products["Laptop"].brand == "BrandX"
+
+
+def test_deserialize_negative():
+    filename = "tests/test_unknown_inventory_data.json"
+    with pytest.raises(ValueError) as excinfo:
+        deserialize_inventory(filename)
+    assert "Unknown product_type: Vehicle" in str(excinfo.value)
 
 
 def test_search_products():
