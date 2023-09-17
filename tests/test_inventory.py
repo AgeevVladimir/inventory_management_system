@@ -37,7 +37,7 @@ def test_remove_product():
     inventory.remove_product(product)
     with pytest.raises(Exception) as e_info:
         inventory.check_quantity(product)
-    assert str(e_info.value) == "Trying to find a product that doesn't exist"
+    assert str(e_info.value) == "Trying to operate on a product that doesn't exist"
 
 
 def test_remove_product_that_doesnt_exist():
@@ -47,7 +47,7 @@ def test_remove_product_that_doesnt_exist():
 
     with pytest.raises(Exception) as e_info:
         inventory.remove_product(product)
-    assert str(e_info.value) == "Trying to remove a product that doesn't exist"
+    assert str(e_info.value) == "Trying to operate on a product that doesn't exist"
 
 
 def test_update_product():
@@ -80,7 +80,7 @@ def test_update_product_that_doesnt_exist():
                                  price=800, quantity=10))
     with pytest.raises(Exception) as e_info:
         inventory.update_product(product, {"price": 900})
-    assert str(e_info.value) == "Trying to update a product that doesn't exist"
+    assert str(e_info.value) == "Trying to operate on a product that doesn't exist"
 
 
 def test_serialize_deserialize():

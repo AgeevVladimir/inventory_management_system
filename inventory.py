@@ -1,4 +1,5 @@
-from typing import Dict, List
+from functools import wraps
+from typing import Dict, List, Callable
 
 from product import Product
 
@@ -6,6 +7,18 @@ from product import Product
 class Inventory:
     def __init__(self):
         self.products: Dict[tuple, Product] = {}
+
+    def check_product_existence(func: Callable) -> Callable:
+        @wraps(func)
+        def wrapper(self, *args, **kwargs):
+            product = args[0]
+            key = product.key_attributes()
+            existing_product = self.products.get(key)
+            if not existing_product:
+                raise Exception("Trying to operate on a product that doesn't exist")
+            return func(self, *args, **kwargs)
+
+        return wrapper
 
     def add_product(self, product: Product):
 
@@ -18,22 +31,16 @@ class Inventory:
         else:
             self.products[key] = product
 
+    @check_product_existence
     def remove_product(self, product: Product):
         key = product.key_attributes()
-        existing_product = self.products.get(key)
-
-        if not existing_product:
-            raise Exception("Trying to remove a product that doesn't exist")
-
         self.products.pop(key, None)
 
+    @check_product_existence
     def update_product(self, product: Product, new_attributes: dict):
         # Получаем старый ключ для поиска существующего продукта
         old_key = product.key_attributes()
         existing_product = self.products.get(old_key)
-
-        if not existing_product:
-            raise Exception("Trying to update a product that doesn't exist")
 
         # Обновляем атрибуты продукта
         for attr, value in new_attributes.items():
@@ -54,14 +61,10 @@ class Inventory:
             # Добавляем обновленную запись в инвентарь
             self.products[new_key] = existing_product
 
+    @check_product_existence
     def check_quantity(self, product: Product) -> int:
         # Получаем старый ключ для поиска существующего продукта
         key = product.key_attributes()
-        existing_product = self.products.get(key)
-
-        if not existing_product:
-            raise Exception("Trying to find a product that doesn't exist")
-
         return self.products.get(key).quantity
 
     def search_products(self, query: str) -> List[Product]:
