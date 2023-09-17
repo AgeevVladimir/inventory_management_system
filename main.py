@@ -31,11 +31,7 @@ if __name__ == "__main__":
 
     # update attributes for product in new inventory
     new_inventory.update_product(ElectronicProduct(subcategory="Laptop", brand="Dell", model="XPS 13",
-                                                   warranty_period=24), {"brand": "Macbook", "model": "air"})
-
-    # update attributes for product in new inventory
-    new_inventory.update_product(ElectronicProduct(subcategory="Laptop", brand="Macbook", model="air",
-                                                   warranty_period=24), {"price": 0})
+                                                   warranty_period=24), {"model": "XPS 15"})
 
     # Print new inventory
     for product_name, product_object in new_inventory.products.items():
@@ -49,7 +45,7 @@ if __name__ == "__main__":
     print("\n")
 
     # check quantity of a product in new inventory using key attributes
-    quantity_checked_product = (ElectronicProduct(subcategory="Laptop", brand="Macbook", model="air",
+    quantity_checked_product = (ElectronicProduct(subcategory="Laptop", brand="Dell", model="XPS 15",
                                                   warranty_period=24))
     print(f"Quantity of "
           f"{quantity_checked_product.key_attributes()}: {new_inventory.check_quantity(quantity_checked_product)}")

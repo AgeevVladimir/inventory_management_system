@@ -60,7 +60,7 @@ class Inventory:
         existing_product = self.products.get(key)
 
         if not existing_product:
-            raise Exception("Trying to update a product that doesn't exist")
+            raise Exception("Trying to find a product that doesn't exist")
 
         return self.products.get(key).quantity
 

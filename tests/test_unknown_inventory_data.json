@@ -1,11 +1,11 @@
 [
     {
-        "name": "Car",
-        "price": 30000.0,
-        "quantity": 1,
+        "Subcategory": "Car",
         "brand": "Toyota",
         "model": "Rav4",
         "warranty_period": 60,
+        "price": 30000.0,
+        "quantity": 1,
         "product_type": "Vehicle"
     }
 ]
