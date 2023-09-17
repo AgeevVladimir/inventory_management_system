@@ -1,7 +1,7 @@
 import json
 
-from product import Product, ElectronicProduct, BookProduct, ClothingProduct
 from inventory import Inventory
+from product import Product, ElectronicProduct, BookProduct, ClothingProduct
 
 class_lookup = {
     'Product': Product,
@@ -14,11 +14,6 @@ class_lookup = {
 def serialize_inventory(inventory: Inventory, filename: str):
     """
     Serialize an Inventory object to a JSON file.
-
-    Args:
-        inventory (Inventory): The inventory object to be serialized.
-        filename (str): The name of the file where the serialized data will be stored.
-
     """
     with open(filename, 'w') as file:
         serialized_products = []
@@ -32,15 +27,7 @@ def serialize_inventory(inventory: Inventory, filename: str):
 def deserialize_inventory(filename: str) -> Inventory:
     """
     Deserialize an Inventory object from a JSON file.
-
-    Args:
-        filename (str): The name of the file containing the serialized Inventory data.
-
-    Returns:
-        Inventory: A new Inventory object populated with the deserialized data.
-
-    Raises:
-        ValueError: If an unknown product_type is found in the JSON file.
+    Raises ValueError If an unknown product_type is found in the JSON file.
     """
     new_inventory = Inventory()
     with open(filename, 'r') as file:

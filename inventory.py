@@ -5,10 +5,21 @@ from product import Product
 
 
 class Inventory:
+    """
+    A class representing a collection of products in an inventory.
+    """
+
     def __init__(self):
+        """
+        Initializes an empty inventory.
+        """
         self.products: Dict[tuple, Product] = {}
 
     def check_product_existence(func: Callable) -> Callable:
+        """
+        Decorator that checks if a product exists in the inventory before proceeding to call the decorated function.
+        """
+
         @wraps(func)
         def wrapper(self, *args, **kwargs):
             product = args[0]
@@ -21,8 +32,10 @@ class Inventory:
         return wrapper
 
     def add_product(self, product: Product):
-
-        # Получаем старый ключ для поиска существующего продукта
+        """
+        Adds a product to the inventory.
+        Raises an exception if the product already exists.
+        """
         key = product.key_attributes()
         existing_product = self.products.get(key)
 
@@ -33,41 +46,47 @@ class Inventory:
 
     @check_product_existence
     def remove_product(self, product: Product):
+        """
+        Removes a product from the inventory.
+        """
         key = product.key_attributes()
         self.products.pop(key, None)
 
     @check_product_existence
     def update_product(self, product: Product, new_attributes: dict):
-        # Получаем старый ключ для поиска существующего продукта
+        """
+        Updates the attributes of a product in the inventory.
+        In case of duplicates after updates: summarizes two products.
+        """
         old_key = product.key_attributes()
         existing_product = self.products.get(old_key)
 
-        # Обновляем атрибуты продукта
         for attr, value in new_attributes.items():
             setattr(existing_product, attr, value)
 
-        # Удаляем старую запись из инвентаря
         del self.products[old_key]
 
-        # Получаем новый ключ после обновления
         new_key = existing_product.key_attributes()
 
-        # Объединяем продукты с одинаковыми ключевыми атрибутами, если таковые имеются
         another_existing_product = self.products.get(new_key)
         if another_existing_product:
             another_existing_product.quantity += existing_product.quantity
-            another_existing_product.price = existing_product.price  # или какая-то другая логика для обновления цены
+            another_existing_product.price = existing_product.price
         else:
-            # Добавляем обновленную запись в инвентарь
             self.products[new_key] = existing_product
 
     @check_product_existence
     def check_quantity(self, product: Product) -> int:
-        # Получаем старый ключ для поиска существующего продукта
+        """
+        Returns the quantity of products.
+        """
         key = product.key_attributes()
         return self.products.get(key).quantity
 
     def search_products(self, query: str) -> List[Product]:
+        """
+        Searches the inventory based on a query and returns a list of matching products.
+        """
         result = []
         for product in self.products.values():
             if any(query.lower() in str(getattr(product, attr)).lower() for attr in vars(product)):
