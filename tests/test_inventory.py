@@ -5,9 +5,9 @@ import pytest
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-from inventory import Inventory
-from product import ElectronicProduct, BookProduct
-from serializer import serialize_inventory, deserialize_inventory
+from app.inventory.inventory import Inventory
+from app.product.models import ElectronicProduct, BookProduct
+from app.serializer.serializer import serialize_inventory, deserialize_inventory
 
 
 def test_add_product():

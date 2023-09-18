@@ -1,6 +1,6 @@
-from inventory import Inventory
-from product import ElectronicProduct, BookProduct, ClothingProduct
-from serializer import serialize_inventory, deserialize_inventory
+from app.inventory.inventory import Inventory
+from app.product.models import ElectronicProduct, BookProduct, ClothingProduct
+from app.serializer.serializer import serialize_inventory, deserialize_inventory
 
 if __name__ == "__main__":
 

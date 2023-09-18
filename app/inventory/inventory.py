@@ -1,7 +1,7 @@
 from functools import wraps
 from typing import Dict, List, Callable
 
-from product import Product
+from app.product.models import Product
 
 
 class Inventory:
@@ -15,6 +15,7 @@ class Inventory:
         """
         self.products: Dict[tuple, Product] = {}
 
+    @staticmethod
     def check_product_existence(func: Callable) -> Callable:
         """
         Decorator that checks if a product exists in the inventory before proceeding to call the decorated function.
@@ -40,7 +41,7 @@ class Inventory:
         existing_product = self.products.get(key)
 
         if existing_product:
-            raise Exception("Product is already exist, to update price or quantity use function update_product")
+            raise Exception("Product already exists; to update price or quantity, use the `update_product` function.")
         else:
             self.products[key] = product
 
@@ -50,7 +51,7 @@ class Inventory:
         Removes a product from the inventory.
         """
         key = product.key_attributes()
-        self.products.pop(key, None)
+        self.products.pop(key)
 
     @check_product_existence
     def update_product(self, product: Product, new_attributes: dict):
