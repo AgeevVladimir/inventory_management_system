@@ -20,17 +20,6 @@
         "product_type": "ElectronicProduct"
     },
     {
-        "category": "Books",
-        "subcategory": "Nonfiction",
-        "price": 40.0,
-        "quantity": 30,
-        "title": "Python Cookbook",
-        "author": "David Beazley",
-        "publisher": "O'Reilly",
-        "ISBN": "978-1449340377",
-        "product_type": "BookProduct"
-    },
-    {
         "category": "Clothing",
         "subcategory": "T-shirt",
         "price": 15.0,
@@ -39,5 +28,46 @@
         "size": "L",
         "color": "Red",
         "product_type": "ClothingProduct"
+    },
+    {
+        "category": "Electronics",
+        "subcategory": "Laptop",
+        "price": 300.0,
+        "quantity": 10,
+        "brand": "Lenovo",
+        "model": "Thinkpad",
+        "warranty_period": 12,
+        "product_type": "ElectronicProduct"
+    },
+    {
+        "category": "Electronics",
+        "subcategory": "Laptop",
+        "price": 720.0,
+        "quantity": 10,
+        "brand": "Lenovo",
+        "model": "Ideapad",
+        "warranty_period": 10,
+        "product_type": "ElectronicProduct"
+    },
+    {
+        "category": "Electronics",
+        "subcategory": "Laptop",
+        "price": 800.0,
+        "quantity": 10,
+        "brand": "Macbook",
+        "model": "Pro",
+        "warranty_period": 36,
+        "product_type": "ElectronicProduct"
+    },
+    {
+        "category": "Books",
+        "subcategory": "Nonfiction",
+        "price": 50,
+        "quantity": 30,
+        "title": "Python Cookbook",
+        "author": "David Beazley",
+        "publisher": "O'Reilly",
+        "ISBN": "978-1449340378",
+        "product_type": "BookProduct"
     }
 ]

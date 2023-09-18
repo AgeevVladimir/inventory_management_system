@@ -1,7 +1,7 @@
 from functools import wraps
 from typing import Dict, List, Callable
 
-from app.product.models import Product
+from product.models import Product
 
 
 class Inventory:
@@ -15,7 +15,6 @@ class Inventory:
         """
         self.products: Dict[tuple, Product] = {}
 
-    @staticmethod
     def check_product_existence(func: Callable) -> Callable:
         """
         Decorator that checks if a product exists in the inventory before proceeding to call the decorated function.
@@ -27,7 +26,7 @@ class Inventory:
             key = product.key_attributes()
             existing_product = self.products.get(key)
             if not existing_product:
-                raise Exception("Trying to operate on a product that doesn't exist")
+                raise ValueError("Trying to operate on a product that doesn't exist")
             return func(self, *args, **kwargs)
 
         return wrapper
@@ -93,3 +92,6 @@ class Inventory:
             if any(query.lower() in str(getattr(product, attr)).lower() for attr in vars(product)):
                 result.append(product)
         return result
+
+    def get_products_by_category(self, category: str) -> List[Product]:
+        return [product for product in self.products.values() if product.category == category]

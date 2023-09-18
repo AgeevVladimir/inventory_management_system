@@ -6,12 +6,17 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 
-python main.py
+uvicorn main:app --reload
 ```
 
-To run pytests and check coverage:
+To run tests and check coverage:
 ```
 pytests
 coverage run -m pytest
 coverage report -m  
+```
+
+API Documentation:
+```
+http://127.0.0.1:8000/docs
 ```
