@@ -1,7 +1,7 @@
 from functools import wraps
 from typing import Dict, List, Callable
 
-from app.product.models import Product
+from app.model.product_models import Product
 
 
 class Inventory:
@@ -17,7 +17,7 @@ class Inventory:
 
     def check_product_existence(func: Callable) -> Callable:
         """
-        Decorator that checks if a product exists in the inventory before proceeding to call the decorated function.
+        Decorator that checks if a model exists in the inventory before proceeding to call the decorated function.
         """
 
         @wraps(func)
@@ -26,15 +26,15 @@ class Inventory:
             key = product.key_attributes()
             existing_product = self.products.get(key)
             if not existing_product:
-                raise ValueError("Trying to operate on a product that doesn't exist")
+                raise ValueError("Trying to operate on a model that doesn't exist")
             return func(self, *args, **kwargs)
 
         return wrapper
 
     def add_product(self, product: Product):
         """
-        Adds a product to the inventory.
-        Raises an exception if the product already exists.
+        Adds a model to the inventory.
+        Raises an exception if the model already exists.
         """
         key = product.key_attributes()
         existing_product = self.products.get(key)
@@ -47,7 +47,7 @@ class Inventory:
     @check_product_existence
     def remove_product(self, product: Product):
         """
-        Removes a product from the inventory.
+        Removes a model from the inventory.
         """
         key = product.key_attributes()
         self.products.pop(key)
@@ -55,7 +55,7 @@ class Inventory:
     @check_product_existence
     def update_product(self, product: Product, new_attributes: dict):
         """
-        Updates the attributes of a product in the inventory.
+        Updates the attributes of a model in the inventory.
         In case of duplicates after updates: summarizes two products.
         """
         old_key = product.key_attributes()

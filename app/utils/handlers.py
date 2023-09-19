@@ -2,8 +2,8 @@ import logging
 
 from fastapi import HTTPException
 
-from app.config import *
-from app.serializer.serializer import serialize_inventory, deserialize_inventory
+from app.utils.config import *
+from app.utils.serializer import serialize_inventory, deserialize_inventory
 
 logging.basicConfig(level=LOGGING_LEVEL)
 logger = logging.getLogger(__name__)
@@ -15,9 +15,9 @@ def handle_add_product(product, product_type):
         inventory.add_product(product)
         serialize_inventory(inventory, JSON_PATH)
         logger.info(f"{product_type} Product added: {product}")
-        return {"message": "Product added", "product": product}
+        return {"message": "Product added", "model": product}
     except Exception as e:
-        logger.error(f"Failed to add {product_type} product: {e}")
+        logger.error(f"Failed to add {product_type} model: {e}")
         raise HTTPException(status_code=400, detail=str(e))
 
 
@@ -27,12 +27,12 @@ def handle_update_product(product, new_attributes: dict, product_type: str):
         inventory.update_product(product, new_attributes)
         serialize_inventory(inventory, JSON_PATH)
         logger.info(f"{product_type} Product updated: {new_attributes}")
-        return {"message": f"{product_type} Product updated", "product": new_attributes}
+        return {"message": f"{product_type} Product updated", "model": new_attributes}
     except ValueError as e:
-        logger.error(f"Failed to update {product_type} product: {e}")
+        logger.error(f"Failed to update {product_type} model: {e}")
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
-        logger.error(f"Failed to update {product_type} product: {e}")
+        logger.error(f"Failed to update {product_type} model: {e}")
         raise HTTPException(status_code=400, detail=str(e))
 
 

@@ -1,7 +1,7 @@
 import json
 
 from app.inventory.inventory import Inventory
-from app.product.models import Product, ElectronicProduct, BookProduct, ClothingProduct
+from app.model.product_models import Product, ElectronicProduct, BookProduct, ClothingProduct
 
 class_lookup = {
     'Product': Product,

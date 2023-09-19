@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Body, Path
-from app.product.models import ElectronicProduct, BookProduct, ClothingProduct
+from app.model.product_models import ElectronicProduct, BookProduct, ClothingProduct
 from app.utils.handlers import *
 
 router = APIRouter()
