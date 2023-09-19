@@ -5,9 +5,9 @@ import pytest
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-from inventory import Inventory
-from product import ElectronicProduct, BookProduct
-from serializer import serialize_inventory, deserialize_inventory
+from app.inventory.inventory import Inventory
+from app.model.product_models import ElectronicProduct, BookProduct
+from app.utils.serializer import serialize_inventory, deserialize_inventory
 
 
 def test_add_product():
@@ -26,7 +26,8 @@ def test_add_existing_product_raises_exception():
 
     with pytest.raises(Exception) as e_info:
         inventory.add_product(product)
-    assert str(e_info.value) == "Product is already exist, to update price or quantity use function update_product"
+    assert str(
+        e_info.value) == "Product already exists; to update price or quantity, use the `update_product` function."
 
 
 def test_remove_product():
@@ -37,7 +38,7 @@ def test_remove_product():
     inventory.remove_product(product)
     with pytest.raises(Exception) as e_info:
         inventory.check_quantity(product)
-    assert str(e_info.value) == "Trying to operate on a product that doesn't exist"
+    assert str(e_info.value) == "Trying to operate on a model that doesn't exist"
 
 
 def test_remove_product_that_doesnt_exist():
@@ -47,7 +48,7 @@ def test_remove_product_that_doesnt_exist():
 
     with pytest.raises(Exception) as e_info:
         inventory.remove_product(product)
-    assert str(e_info.value) == "Trying to operate on a product that doesn't exist"
+    assert str(e_info.value) == "Trying to operate on a model that doesn't exist"
 
 
 def test_update_product():
@@ -80,7 +81,7 @@ def test_update_product_that_doesnt_exist():
                                  price=800, quantity=10))
     with pytest.raises(Exception) as e_info:
         inventory.update_product(product, {"price": 900})
-    assert str(e_info.value) == "Trying to operate on a product that doesn't exist"
+    assert str(e_info.value) == "Trying to operate on a model that doesn't exist"
 
 
 def test_serialize_deserialize():
@@ -100,7 +101,7 @@ def test_serialize_deserialize():
 
 
 def test_deserialize_negative():
-    filename = "tests/test_unknown_inventory_data.json"
+    filename = "test_unknown_inventory_data.json"
     with pytest.raises(ValueError) as excinfo:
         deserialize_inventory(filename)
     assert "Unknown product_type: Vehicle" in str(excinfo.value)

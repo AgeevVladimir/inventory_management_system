@@ -1,7 +1,7 @@
 import json
 
-from inventory import Inventory
-from product import Product, ElectronicProduct, BookProduct, ClothingProduct
+from app.inventory.inventory import Inventory
+from app.model.product_models import Product, ElectronicProduct, BookProduct, ClothingProduct
 
 class_lookup = {
     'Product': Product,
@@ -27,7 +27,6 @@ def serialize_inventory(inventory: Inventory, filename: str):
 def deserialize_inventory(filename: str) -> Inventory:
     """
     Deserialize an Inventory object from a JSON file.
-    Raises ValueError If an unknown product_type is found in the JSON file.
     """
     new_inventory = Inventory()
     with open(filename, 'r') as file:
