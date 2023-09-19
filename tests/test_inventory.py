@@ -1,9 +1,4 @@
-import os
-import sys
-
 import pytest
-
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from app.inventory.inventory import Inventory
 from app.model.product_models import ElectronicProduct, BookProduct
@@ -90,7 +85,7 @@ def test_serialize_deserialize():
                                  price=800, quantity=10))
     inventory.add_product(product)
 
-    filename = "test_inventory_data.json"
+    filename = "tests/test_inventory_data.json"
     serialize_inventory(inventory, filename)
     new_inventory = deserialize_inventory(filename)
 
@@ -101,7 +96,7 @@ def test_serialize_deserialize():
 
 
 def test_deserialize_negative():
-    filename = "test_unknown_inventory_data.json"
+    filename = "tests/test_unknown_inventory_data.json"
     with pytest.raises(ValueError) as excinfo:
         deserialize_inventory(filename)
     assert "Unknown product_type: Vehicle" in str(excinfo.value)

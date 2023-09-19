@@ -7,6 +7,10 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 uvicorn main:app --reload
+
+in case of ERROR:[Errno 48] Address already in use
+lsof -i :8000
+kill -9 <PID>
 ```
 
 To run tests and check coverage:
