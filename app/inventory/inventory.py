@@ -1,7 +1,7 @@
 from functools import wraps
 from typing import Dict, List, Callable
 
-from product.models import Product
+from app.product.models import Product
 
 
 class Inventory:

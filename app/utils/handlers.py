@@ -1,8 +1,9 @@
 import logging
 
-from config import *
 from fastapi import HTTPException
-from serializer.serializer import serialize_inventory, deserialize_inventory
+
+from app.config import *
+from app.serializer.serializer import serialize_inventory, deserialize_inventory
 
 logging.basicConfig(level=LOGGING_LEVEL)
 logger = logging.getLogger(__name__)

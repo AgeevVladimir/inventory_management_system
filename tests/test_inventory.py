@@ -26,7 +26,8 @@ def test_add_existing_product_raises_exception():
 
     with pytest.raises(Exception) as e_info:
         inventory.add_product(product)
-    assert str(e_info.value) == "Product already exists; to update price or quantity, use the `update_product` function."
+    assert str(
+        e_info.value) == "Product already exists; to update price or quantity, use the `update_product` function."
 
 
 def test_remove_product():
@@ -89,7 +90,7 @@ def test_serialize_deserialize():
                                  price=800, quantity=10))
     inventory.add_product(product)
 
-    filename = "tests/test_inventory_data.json"
+    filename = "test_inventory_data.json"
     serialize_inventory(inventory, filename)
     new_inventory = deserialize_inventory(filename)
 
@@ -100,7 +101,7 @@ def test_serialize_deserialize():
 
 
 def test_deserialize_negative():
-    filename = "tests/test_unknown_inventory_data.json"
+    filename = "test_unknown_inventory_data.json"
     with pytest.raises(ValueError) as excinfo:
         deserialize_inventory(filename)
     assert "Unknown product_type: Vehicle" in str(excinfo.value)
