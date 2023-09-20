@@ -5,6 +5,16 @@ from app.utils.handlers import *
 router = APIRouter()
 
 
+@router.get("/get_products/{category}/", tags=["Products"])
+async def get_products_by_category(category: str = Path(..., example="Electronics/Books/Clothing")):
+    return handle_get_products_by_category(category)
+
+
+@router.post("/search_products/", tags=["Products"])
+async def search_products(query: str):
+    return handle_search_products(query)
+
+
 @router.post("/add_product/electronic/", tags=["Add Product"])
 async def add_electronic_product(product: ElectronicProduct):
     return handle_add_product(product, "Electronic")
@@ -35,6 +45,16 @@ async def update_clothing_product(product: ClothingProduct, new_attributes: dict
     return handle_update_product(product, new_attributes, "Clothing")
 
 
-@router.get("/get_products/{category}/", tags=["Products"])
-async def get_products_by_category(category: str = Path(..., example="Electronics/Books/Clothing")):
-    return handle_get_products_by_category(category)
+@router.post("/remove_product/electronic/", tags=["Remove Product"])
+async def remove_electronic_product(product: ElectronicProduct):
+    return handle_remove_product(product, "Electronic")
+
+
+@router.post("/remove_product/book/", tags=["Remove Product"])
+async def remove_book_product(product: BookProduct):
+    return handle_remove_product(product, "Book")
+
+
+@router.post("/remove_product/clothes/", tags=["Remove Product"])
+async def remove_clothing_product(product: ClothingProduct):
+    return handle_remove_product(product, "Clothing")

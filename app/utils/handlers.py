@@ -15,9 +15,21 @@ def handle_add_product(product, product_type):
         inventory.add_product(product)
         serialize_inventory(inventory, JSON_PATH)
         logger.info(f"{product_type} Product added: {product}")
-        return {"message": "Product added", "model": product}
+        return {"message": "Product added", "product": product}
     except Exception as e:
         logger.error(f"Failed to add {product_type} model: {e}")
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+def handle_remove_product(product, product_type):
+    try:
+        inventory = deserialize_inventory(JSON_PATH)
+        inventory.remove_product(product)
+        serialize_inventory(inventory, JSON_PATH)
+        logger.info(f"{product_type} Product removed: {product}")
+        return {"message": "Product removed", "product": product}
+    except Exception as e:
+        logger.error(f"Failed to remove {product_type} product: {e}")
         raise HTTPException(status_code=400, detail=str(e))
 
 
@@ -27,12 +39,12 @@ def handle_update_product(product, new_attributes: dict, product_type: str):
         inventory.update_product(product, new_attributes)
         serialize_inventory(inventory, JSON_PATH)
         logger.info(f"{product_type} Product updated: {new_attributes}")
-        return {"message": f"{product_type} Product updated", "model": new_attributes}
+        return {"message": f"{product_type} Product updated", "product": new_attributes}
     except ValueError as e:
-        logger.error(f"Failed to update {product_type} model: {e}")
+        logger.error(f"Failed to update {product_type} product: {e}")
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
-        logger.error(f"Failed to update {product_type} model: {e}")
+        logger.error(f"Failed to update {product_type} product: {e}")
         raise HTTPException(status_code=400, detail=str(e))
 
 
@@ -51,4 +63,18 @@ def handle_get_products_by_category(category: str):
             return {"message": f"No products found in category {category}"}
     except Exception as e:
         logger.error(f"Failed to get products in category {category}: {e}")
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+def handle_search_products(query: str):
+    inventory = deserialize_inventory(JSON_PATH)
+
+    try:
+        search_result = inventory.search_products(query)
+        if search_result:
+            return {"message": f"Products by word {query}", f"Products found": search_result}
+        else:
+            return {"message": f"No products by word {query} found"}
+    except Exception as e:
+        logger.error(f"Failed to get products: {e}")
         raise HTTPException(status_code=400, detail=str(e))

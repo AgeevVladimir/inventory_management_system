@@ -69,15 +69,5 @@
         "publisher": "O'Reilly",
         "ISBN": "978-1449340378",
         "product_type": "BookProduct"
-    },
-    {
-        "category": "Electronics",
-        "subcategory": "Mobile",
-        "price": 400.0,
-        "quantity": 10,
-        "brand": "Samsung",
-        "model": "s1",
-        "warranty_period": 10,
-        "product_type": "ElectronicProduct"
     }
 ]
