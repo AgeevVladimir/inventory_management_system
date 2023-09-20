@@ -26,7 +26,7 @@ class Inventory:
             key = product.key_attributes()
             existing_product = self.products.get(key)
             if not existing_product:
-                raise ValueError("Trying to operate on a model that doesn't exist")
+                raise ValueError("Trying to operate on a product that doesn't exist")
             return func(self, *args, **kwargs)
 
         return wrapper
