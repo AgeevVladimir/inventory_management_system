@@ -15,19 +15,19 @@ class Inventory:
         """
         self.products: Dict[tuple, Product] = {}
 
-    def check_product_existence(self: Callable) -> Callable:
+    def check_product_existence(f):
         """
-        Decorator that checks if a model exists in the inventory before proceeding to call the decorated function.
+        Decorator that checks if a product exists in the inventory before proceeding to call the decorated function.
         """
 
-        @wraps(self)
+        @wraps(f)
         def wrapper(self, *args, **kwargs):
             product = args[0]
             key = product.key_attributes()
             existing_product = self.products.get(key)
             if not existing_product:
                 raise ValueError("Trying to operate on a product that doesn't exist")
-            return self(self, *args, **kwargs)
+            return f(self, *args, **kwargs)
 
         return wrapper
 

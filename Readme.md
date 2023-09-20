@@ -13,6 +13,13 @@ lsof -i :8000
 kill -9 <PID>
 ```
 
+To run in docker:
+```
+docker build -t inventory_app .
+docker run -p 8080:8080 inventory_app
+
+```
+
 To run tests and check coverage:
 ```
 pytests
