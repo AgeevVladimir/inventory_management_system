@@ -50,6 +50,7 @@ coverage run -m pytest
 coverage report -m  
 ```
 
-Documentation:
+Standard FastAPI Documentation
 
-[Standard FastAPI Documentation](http://127.0.0.1:8000/docs)
+- [if run in uvicorn](http://127.0.0.1:8000/docs)
+- [if run in docker](http://0.0.0.0:8080/docs)
