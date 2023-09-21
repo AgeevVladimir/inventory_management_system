@@ -2,8 +2,8 @@ from typing import List
 
 from sqlalchemy import or_
 
-from app.database.database import Session  # Импортируйте Session из вашего файла database.py
-from app.database.model import Product, ClothingProduct, BookProduct, ElectronicProduct  # Ваш импорт модели продукта
+from app.model.database import Session
+from app.model.db_model import Product, ClothingProduct, BookProduct, ElectronicProduct
 
 
 class Inventory:
@@ -18,10 +18,10 @@ class Inventory:
     def remove_product(self, product_id: int):
         with Session() as session:
             existing_product = session.query(Product).filter_by(id=product_id).first()
-        if not existing_product:
-            raise ValueError("Product does not exist")
-        session.delete(existing_product)
-        session.commit()
+            if not existing_product:
+                raise ValueError("Product does not exist")
+            session.delete(existing_product)
+            session.commit()
 
     def update_product(self, product_id: int, new_attributes: dict):
         with Session() as session:
@@ -40,9 +40,11 @@ class Inventory:
         return existing_product.quantity
 
     def search_products(self, query: str) -> List[Product]:
-        return self.session.query(Product).join(
-            ElectronicProduct, BookProduct, ClothingProduct, isouter=True
-        ).filter(
+        return self.session.query(Product) \
+            .outerjoin(ElectronicProduct, Product.id == ElectronicProduct.id) \
+            .outerjoin(BookProduct, Product.id == BookProduct.id) \
+            .outerjoin(ClothingProduct, Product.id == ClothingProduct.id) \
+            .filter(
             or_(
                 Product.type.ilike(f"%{query}%"),
                 Product.category.ilike(f"%{query}%"),

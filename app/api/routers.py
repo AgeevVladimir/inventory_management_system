@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Body, Path
 
-from app.database.model import ElectronicProduct, BookProduct, ClothingProduct
+from app.model.service_model import ElectronicProductBase, BookProductBase, ClothingProductBase
 from app.utils.handlers import *
 
 router = APIRouter()
@@ -17,18 +17,18 @@ async def search_products(query: str):
 
 
 @router.post("/add_product/electronic/", tags=["Add Product"])
-async def add_electronic_product(product: ElectronicProduct):
-    return handle_add_product(product, "Electronic")
+async def add_electronic_product(product: ElectronicProductBase):
+    return handle_add_product(product.__dict__, "ElectronicProduct")
 
 
 @router.post("/add_product/book/", tags=["Add Product"])
-async def add_book_product(product: BookProduct):
-    return handle_add_product(product, "Book")
+async def add_book_product(product: BookProductBase):
+    return handle_add_product(product.__dict__, "BookProduct")
 
 
 @router.post("/add_product/clothes/", tags=["Add Product"])
-async def add_clothing_product(product: ClothingProduct):
-    return handle_add_product(product, "Clothing")
+async def add_clothing_product(product: ClothingProductBase):
+    return handle_add_product(product.__dict__, "ClothingProduct")
 
 
 @router.put("/update_product/electronic/{product_id}/", tags=["Update Product"])

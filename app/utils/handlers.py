@@ -3,6 +3,7 @@ import logging
 from fastapi import HTTPException
 
 from app.inventory.inventory import Inventory
+from app.model.db_model import ElectronicProduct, BookProduct, ClothingProduct
 from app.utils.config import *
 
 logging.basicConfig(level=LOGGING_LEVEL)
@@ -11,11 +12,19 @@ logger = logging.getLogger(__name__)
 inventory = Inventory()
 
 
-def handle_add_product(product, product_type):
+def handle_add_product(product_data: dict, product_type: str):
+    if product_type == "ElectronicProduct":
+        product = ElectronicProduct(**product_data)
+    elif product_type == "BookProduct":
+        product = BookProduct(**product_data)
+    elif product_type == "ClothingProduct":
+        product = ClothingProduct(**product_data)
+    else:
+        raise HTTPException(status_code=400, detail="Invalid product type")
     try:
         inventory.add_product(product)
-        logger.info(f"{product_type} Product added: {product}")
-        return {"message": "Product added", "product": product}
+        logger.info(f"{product_type} Product added: {product_data}")
+        return {"message": "Product added", "product": product_data}
     except Exception as e:
         logger.error(f"Failed to add {product_type} model: {e}")
         raise HTTPException(status_code=400, detail=str(e))
