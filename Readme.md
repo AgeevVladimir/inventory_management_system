@@ -6,6 +6,7 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 
+python app/utils/init_db.py for initial db creation
 uvicorn main:app --reload
 
 in case of ERROR:[Errno 48] Address already in use

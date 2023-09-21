@@ -2,18 +2,18 @@ import logging
 
 from fastapi import HTTPException
 
+from app.inventory.inventory import Inventory
 from app.utils.config import *
-from app.utils.serializer import serialize_inventory, deserialize_inventory
 
 logging.basicConfig(level=LOGGING_LEVEL)
 logger = logging.getLogger(__name__)
 
+inventory = Inventory()
+
 
 def handle_add_product(product, product_type):
     try:
-        inventory = deserialize_inventory(JSON_PATH)
         inventory.add_product(product)
-        serialize_inventory(inventory, JSON_PATH)
         logger.info(f"{product_type} Product added: {product}")
         return {"message": "Product added", "product": product}
     except Exception as e:
@@ -21,25 +21,21 @@ def handle_add_product(product, product_type):
         raise HTTPException(status_code=400, detail=str(e))
 
 
-def handle_remove_product(product, product_type):
+def handle_remove_product(product_id: int, product_type: str):
     try:
-        inventory = deserialize_inventory(JSON_PATH)
-        inventory.remove_product(product)
-        serialize_inventory(inventory, JSON_PATH)
-        logger.info(f"{product_type} Product removed: {product}")
-        return {"message": "Product removed", "product": product}
+        inventory.remove_product(product_id)
+        logger.info(f"{product_type} Product removed with ID: {product_id}")
+        return {"message": "Product removed", "product_id": product_id}
     except Exception as e:
         logger.error(f"Failed to remove {product_type} product: {e}")
         raise HTTPException(status_code=400, detail=str(e))
 
 
-def handle_update_product(product, new_attributes: dict, product_type: str):
-    inventory = deserialize_inventory(JSON_PATH)
+def handle_update_product(product_id: int, new_attributes: dict, product_type: str):
     try:
-        inventory.update_product(product, new_attributes)
-        serialize_inventory(inventory, JSON_PATH)
-        logger.info(f"{product_type} Product updated: {new_attributes}")
-        return {"message": f"{product_type} Product updated", "product": new_attributes}
+        inventory.update_product(product_id, new_attributes)
+        logger.info(f"{product_type} Product updated with ID: {product_id}. Attributes: {new_attributes}")
+        return {"message": f"{product_type} Product updated", "product_id": product_id, "attributes": new_attributes}
     except ValueError as e:
         logger.error(f"Failed to update {product_type} product: {e}")
         raise HTTPException(status_code=404, detail=str(e))
@@ -49,7 +45,6 @@ def handle_update_product(product, new_attributes: dict, product_type: str):
 
 
 def handle_get_products_by_category(category: str):
-    inventory = deserialize_inventory(JSON_PATH)
     known_categories = ["Electronics", "Books", "Clothing"]
 
     if category not in known_categories:
@@ -67,8 +62,6 @@ def handle_get_products_by_category(category: str):
 
 
 def handle_search_products(query: str):
-    inventory = deserialize_inventory(JSON_PATH)
-
     try:
         search_result = inventory.search_products(query)
         if search_result:

@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Body, Path
-from app.model.product_models import ElectronicProduct, BookProduct, ClothingProduct
+
+from app.database.model import ElectronicProduct, BookProduct, ClothingProduct
 from app.utils.handlers import *
 
 router = APIRouter()
@@ -30,31 +31,31 @@ async def add_clothing_product(product: ClothingProduct):
     return handle_add_product(product, "Clothing")
 
 
-@router.put("/update_product/electronic/", tags=["Update Product"])
-async def update_electronic_product(product: ElectronicProduct, new_attributes: dict = Body(...)):
-    return handle_update_product(product, new_attributes, "Electronic")
+@router.put("/update_product/electronic/{product_id}/", tags=["Update Product"])
+async def update_electronic_product(product_id: int, new_attributes: dict = Body(...)):
+    return handle_update_product(product_id, new_attributes, "Electronic")
 
 
-@router.put("/update_product/book/", tags=["Update Product"])
-async def update_book_product(product: BookProduct, new_attributes: dict = Body(...)):
-    return handle_update_product(product, new_attributes, "Book")
+@router.put("/update_product/book/{product_id}/", tags=["Update Product"])
+async def update_book_product(product_id: int, new_attributes: dict = Body(...)):
+    return handle_update_product(product_id, new_attributes, "Book")
 
 
-@router.put("/update_product/clothes/", tags=["Update Product"])
-async def update_clothing_product(product: ClothingProduct, new_attributes: dict = Body(...)):
-    return handle_update_product(product, new_attributes, "Clothing")
+@router.put("/update_product/clothes/{product_id}/", tags=["Update Product"])
+async def update_clothing_product(product_id: int, new_attributes: dict = Body(...)):
+    return handle_update_product(product_id, new_attributes, "Clothing")
 
 
-@router.post("/remove_product/electronic/", tags=["Remove Product"])
-async def remove_electronic_product(product: ElectronicProduct):
-    return handle_remove_product(product, "Electronic")
+@router.delete("/remove_product/electronic/{product_id}/", tags=["Remove Product"])
+async def remove_electronic_product(product_id: int):
+    return handle_remove_product(product_id, "Electronic")
 
 
-@router.post("/remove_product/book/", tags=["Remove Product"])
-async def remove_book_product(product: BookProduct):
-    return handle_remove_product(product, "Book")
+@router.delete("/remove_product/book/{product_id}/", tags=["Remove Product"])
+async def remove_book_product(product_id: int):
+    return handle_remove_product(product_id, "Book")
 
 
-@router.post("/remove_product/clothes/", tags=["Remove Product"])
-async def remove_clothing_product(product: ClothingProduct):
-    return handle_remove_product(product, "Clothing")
+@router.delete("/remove_product/clothes/{product_id}/", tags=["Remove Product"])
+async def remove_clothing_product(product_id: int):
+    return handle_remove_product(product_id, "Clothing")
