@@ -1,3 +1,13 @@
+"""
+Serialization Utility for Inventory System
+
+This module provides utility functions to serialize and deserialize the inventory:
+- `serialize_inventory`: Converts the current state of the inventory into a JSON format and writes to a file.
+- `deserialize_inventory`: Reads the JSON data from a file and recreates the inventory state.
+
+Serialization includes saving the type of each product so it can be properly deserialized later.
+"""
+
 import json
 
 from app.inventory.inventory import Inventory
@@ -12,9 +22,6 @@ class_lookup = {
 
 
 def serialize_inventory(inventory: Inventory, filename: str):
-    """
-    Serialize an Inventory object to a JSON file.
-    """
     with open(filename, 'w') as file:
         serialized_products = []
         for product in inventory.products.values():
@@ -25,9 +32,6 @@ def serialize_inventory(inventory: Inventory, filename: str):
 
 
 def deserialize_inventory(filename: str) -> Inventory:
-    """
-    Deserialize an Inventory object from a JSON file.
-    """
     new_inventory = Inventory()
     with open(filename, 'r') as file:
         data = json.load(file)

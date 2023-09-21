@@ -1,3 +1,17 @@
+"""
+Handlers for Product Management in Inventory System
+
+This module provides handler functions to interact with the inventory, including:
+- Adding a product (`handle_add_product`)
+- Removing a product (`handle_remove_product`)
+- Updating a product's attributes (`handle_update_product`)
+- Fetching products by their category (`handle_get_products_by_category`)
+- Searching for products based on a query (`handle_search_products`)
+
+Each handler function typically interfaces with the inventory through serialization/deserialization,
+logs the operation, and returns a message along with the relevant product details.
+"""
+
 import logging
 
 from fastapi import HTTPException
@@ -16,7 +30,7 @@ def handle_add_product(product, product_type):
         serialize_inventory(inventory, JSON_PATH)
         logger.info(f"{product_type} Product added: {product}")
         return {"message": "Product added", "product": product}
-    except Exception as e:
+    except ValueError as e:
         logger.error(f"Failed to add {product_type} model: {e}")
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -28,7 +42,7 @@ def handle_remove_product(product, product_type):
         serialize_inventory(inventory, JSON_PATH)
         logger.info(f"{product_type} Product removed: {product}")
         return {"message": "Product removed", "product": product}
-    except Exception as e:
+    except ValueError as e:
         logger.error(f"Failed to remove {product_type} product: {e}")
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -61,7 +75,7 @@ def handle_get_products_by_category(category: str):
             return {"message": f"Products in category {category}", "products": products_in_category}
         else:
             return {"message": f"No products found in category {category}"}
-    except Exception as e:
+    except ValueError as e:
         logger.error(f"Failed to get products in category {category}: {e}")
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -75,6 +89,6 @@ def handle_search_products(query: str):
             return {"message": f"Products by word {query}", f"Products found": search_result}
         else:
             return {"message": f"No products by word {query} found"}
-    except Exception as e:
+    except ValueError as e:
         logger.error(f"Failed to get products: {e}")
         raise HTTPException(status_code=400, detail=str(e))

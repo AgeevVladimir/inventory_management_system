@@ -1,24 +1,29 @@
+"""
+Inventory Management System
+
+This class represents the core functionality of the inventory management system:
+- `add_product`: Adds a new product to the inventory.
+- `remove_product`: Removes an existing product from the inventory.
+- `update_product`: Modifies attributes of an existing product.
+- `check_quantity`: Returns the quantity of a specified product.
+- `search_products`: Searches for products based on a query string.
+- `get_products_by_category`: Retrieves products of a specified category.
+
+The class uses decorators to validate certain operations, such as checking the existence of a product before modifying it.
+"""
+
 from functools import wraps
-from typing import Dict, List, Callable
+from typing import Dict, List
 
 from app.model.product_models import Product
 
 
 class Inventory:
-    """
-    A class representing a collection of products in an inventory.
-    """
 
     def __init__(self):
-        """
-        Initializes an empty inventory.
-        """
         self.products: Dict[tuple, Product] = {}
 
     def check_product_existence(f):
-        """
-        Decorator that checks if a product exists in the inventory before proceeding to call the decorated function.
-        """
 
         @wraps(f)
         def wrapper(self, *args, **kwargs):
@@ -32,32 +37,21 @@ class Inventory:
         return wrapper
 
     def add_product(self, product: Product):
-        """
-        Adds a model to the inventory.
-        Raises an exception if the model already exists.
-        """
         key = product.key_attributes()
         existing_product = self.products.get(key)
 
         if existing_product:
-            raise Exception("Product already exists; to update price or quantity, use the `update_product` function.")
+            raise ValueError("Product already exists; to update price or quantity, use the `update_product` function.")
         else:
             self.products[key] = product
 
     @check_product_existence
     def remove_product(self, product: Product):
-        """
-        Removes a model from the inventory.
-        """
         key = product.key_attributes()
         self.products.pop(key)
 
     @check_product_existence
     def update_product(self, product: Product, new_attributes: dict):
-        """
-        Updates the attributes of a model in the inventory.
-        In case of duplicates after updates: summarizes two products.
-        """
         old_key = product.key_attributes()
         existing_product = self.products.get(old_key)
 
@@ -77,9 +71,6 @@ class Inventory:
 
     @check_product_existence
     def check_quantity(self, product: Product) -> int:
-        """
-        Returns the quantity of products.
-        """
         key = product.key_attributes()
         return self.products.get(key).quantity
 
