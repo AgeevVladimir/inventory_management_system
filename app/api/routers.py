@@ -46,16 +46,16 @@ async def update_clothing_product(product: ClothingProduct, new_attributes: dict
     return handle_update_product(product, new_attributes, "Clothing")
 
 
-@router.post("/remove_product/electronic/", tags=["Remove Product"])
+@router.delete("/remove_product/electronic/", tags=["Remove Product"])
 async def remove_electronic_product(product: ElectronicProduct):
     return handle_remove_product(product, "Electronic")
 
 
-@router.post("/remove_product/book/", tags=["Remove Product"])
+@router.delete("/remove_product/book/", tags=["Remove Product"])
 async def remove_book_product(product: BookProduct):
     return handle_remove_product(product, "Book")
 
 
-@router.post("/remove_product/clothes/", tags=["Remove Product"])
+@router.delete("/remove_product/clothes/", tags=["Remove Product"])
 async def remove_clothing_product(product: ClothingProduct):
     return handle_remove_product(product, "Clothing")
